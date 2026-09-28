@@ -1,0 +1,128 @@
+.new-task {
+  background-color: var(--background);
+  min-height: calc(100vh - 70px);
+}
+
+.new-task-container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 30px 40px 60px;
+}
+
+.new-task-container h2 {
+  margin: 0 0 30px;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.task-form {
+  width: 100%;
+  max-width: 700px;
+}
+
+.task-form label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--text-dark);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.task-form input,
+.task-form textarea,
+.task-form select {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 22px;
+  padding: 12px 14px;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+  background-color: #ffffff;
+  color: var(--text-dark);
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.task-form textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.task-form input:focus,
+.task-form textarea:focus,
+.task-form select:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.task-form button {
+  border: none;
+  border-radius: 5px;
+  padding: 12px 28px;
+  background-color: var(--primary);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.task-form button:hover {
+  opacity: 0.9;
+}
+
+.completed-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.completed-field label {
+  margin: 0;
+}
+
+.completed-field input {
+  width: auto;
+  margin: 0;
+}
+
+.back-to-top {
+  display: block;
+  width: fit-content;
+  margin: 32px auto 0;
+  color: var(--primary);
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.back-to-top:hover {
+  text-decoration: underline;
+}
+
+.task-filters {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .new-task-container {
+    padding: 25px 20px 50px;
+  }
+
+  .new-task-container h2 {
+    font-size: 22px;
+  }
+
+  .task-form {
+    max-width: 100%;
+  }
+
+  .task-form input,
+  .task-form textarea,
+  .task-form select {
+    font-size: 16px;
+  }
+}
