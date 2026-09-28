@@ -55,7 +55,7 @@ function MyTasks({ tasks, setTasks, setPage, setEditingTask }) {
             value={statusFilter}
             onChange={(event) => setStatusFilter(event.target.value)}
           >
-            <option value="all">All Statuses</option>
+            <option value="all">All Status</option>
             <option value="completed">Completed</option>
             <option value="incomplete">Incomplete</option>
           </select>
