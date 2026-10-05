@@ -1,40 +1,67 @@
-# TaskDuty
+# TaskDuty — Backend API
 
-TaskDuty is a personal task management web application built with React. It allows users to create, view, edit, delete, and filter tasks while keeping task information available after a page refresh.
+TaskDuty is a personal task management backend API built as part of the TechStudio Internship Stage 2 backend assignment.
+
+The project focuses on authentication, authorization, user-scoped task data, CRUD operations, and task filtering.
 
 ## Features
 
-- Create new tasks
-- View all tasks
-- Edit existing tasks
+- User registration
+- User login
+- Password hashing with bcrypt
+- JWT-based authentication
+- Protected API routes
+- User-scoped task data
+- Create tasks
+- View tasks
+- Update tasks
 - Delete tasks
-- Add task title and description
-- Set task priority
-- Add task category
-- Set a due date
-- Mark tasks as completed
 - Filter tasks by category
 - Filter tasks by completion status
-- Form validation
-- Persistent task data using localStorage
-- Responsive layout
-- Navigation between Home, New Task, My Tasks, and Edit Task
+- Combine multiple filters
+- Authorization checks to prevent users from accessing or modifying other users' tasks
 
 ## Technologies Used
 
-- React
-- JavaScript
-- CSS
-- Vite
-- localStorage
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- JSON Web Token (JWT)
+- bcryptjs
+- dotenv
+- Postman
 
 ## Project Structure
 
 ```text
 task-duty/
 ├── client/
-│   └── React frontend
+│   └── React frontend from Stage 1
+│
 ├── server/
-│   └── Provided server files
+│   ├── config/
+│   │   └── db.js
+│   │
+│   ├── controllers/
+│   │   ├── authControllers.js
+│   │   └── taskControllers.js
+│   │
+│   ├── middleware/
+│   │   └── authMiddleware.js
+│   │
+│   ├── models/
+│   │   ├── User.js
+│   │   └── Task.js
+│   │
+│   ├── routes/
+│   │   ├── authRoutes.js
+│   │   └── taskRoutes.js
+│   │
+│   ├── .env
+│   ├── .gitignore
+│   ├── package.json
+│   └── server.js
+│
 └── README.md
 ```
