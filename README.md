@@ -20,6 +20,7 @@ The project focuses on authentication, authorization, user-scoped task data, CRU
 - Filter tasks by completion status
 - Combine multiple filters
 - Authorization checks to prevent users from accessing or modifying other users' tasks
+- Search tasks by title and description
 
 ## Technologies Used
 
