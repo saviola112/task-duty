@@ -6,6 +6,7 @@ import editIcon from "../assets/Edit-button.png";
 function MyTasks({ tasks, setTasks, setPage, setEditingTask }) {
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
+  const [searchTerm, setSearchTerm] = useState("");
 
   function deleteTask(id) {
     setTasks(tasks.filter((task) => task.id !== id));
@@ -20,7 +21,11 @@ function MyTasks({ tasks, setTasks, setPage, setEditingTask }) {
       (statusFilter === "completed" && task.completed === true) ||
       (statusFilter === "incomplete" && task.completed === false);
 
-    return matchesCategory && matchesStatus;
+    const matchesSearch =
+      task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      task.description.toLowerCase().includes(searchTerm.toLowerCase());
+
+    return matchesCategory && matchesStatus && matchesSearch;
   });
 
   return (
@@ -35,6 +40,16 @@ function MyTasks({ tasks, setTasks, setPage, setEditingTask }) {
           >
             <span>+</span> Add New Task
           </button>
+        </div>
+
+        <div className="task-search">
+          <input
+            type="text"
+            placeholder="Search tasks by title or description..."
+            value={searchTerm}
+            onChange={(event) => setSearchTerm(event.target.value)}
+            aria-label="Search tasks by title or description"
+          />
         </div>
 
         <div className="task-filters">

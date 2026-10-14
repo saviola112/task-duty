@@ -158,3 +158,22 @@
     padding: 0 8px;
   }
 }
+
+.task-search {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.task-search input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 15px;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.task-search input:focus {
+  border-color: #64748b;
+}

@@ -33,11 +33,18 @@ export const createTask = async (req, res) => {
 
 export const getTasks = async (req, res) => {
   try {
-    const { category, completed } = req.query;
+    const { category, completed, search } = req.query;
 
     const filter = {
       user: req.user.userId,
     };
+
+    if (search) {
+      filter.$or = [
+        { title: { $regex: search, $options: "i" } },
+        { description: { $regex: search, $options: "i" } },
+      ];
+    }
 
     if (category) {
       filter.category = category;
