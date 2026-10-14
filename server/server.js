@@ -3,8 +3,10 @@ import connectDB from "./config/db.js";
 import "dotenv/config";
 import authRoutes from "./routes/authRoutes.js";
 import taskRoutes from "./routes/taskRoutes.js";
+import cors from "cors";
 
 const app = express();
+app.use(cors());
 
 connectDB();
 

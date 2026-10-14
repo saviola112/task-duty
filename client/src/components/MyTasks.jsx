@@ -7,6 +7,41 @@ function MyTasks({ tasks, setTasks, setPage, setEditingTask }) {
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
+  const [token, setToken] = useState("");
+  const [apiTasks, setApiTasks] = useState([]);
+  const [searchError, setSearchError] = useState("");
+  const [hasSearched, setHasSearched] = useState(false);
+
+  async function searchBackend() {
+    if (!token.trim()) {
+      setSearchError("Please paste your login token first.");
+      return;
+    }
+
+    try {
+      setSearchError("");
+
+      const response = await fetch(
+        `http://localhost:5000/api/tasks?search=${encodeURIComponent(searchTerm)}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Search request failed");
+      }
+
+      setApiTasks(data.tasks || []);
+      setHasSearched(true);
+    } catch (error) {
+      setSearchError(error.message);
+    }
+  }
 
   function deleteTask(id) {
     setTasks(tasks.filter((task) => task.id !== id));
@@ -44,12 +79,34 @@ function MyTasks({ tasks, setTasks, setPage, setEditingTask }) {
 
         <div className="task-search">
           <input
+            type="password"
+            placeholder="Paste your login token here"
+            value={token}
+            onChange={(event) => setToken(event.target.value)}
+            aria-label="Authentication token"
+          />
+        </div>
+
+        <div className="task-search">
+          <input
             type="text"
             placeholder="Search tasks by title or description..."
             value={searchTerm}
             onChange={(event) => setSearchTerm(event.target.value)}
+            onKeyDown={(event) => {
+              if (event.key === "Enter") {
+                searchBackend();
+              }
+            }}
             aria-label="Search tasks by title or description"
           />
+          <button
+            type="button"
+            className="search-button"
+            onClick={searchBackend}
+          >
+            Search
+          </button>
         </div>
 
         <div className="task-filters">
@@ -76,41 +133,63 @@ function MyTasks({ tasks, setTasks, setPage, setEditingTask }) {
           </select>
         </div>
 
-        {filteredTasks.map((task) => (
-          <div className="task-card" key={task.id}>
-            <div className="task-card-top">
-              <span className={`task-priority ${task.priority.toLowerCase()}`}>
-                {task.priority}
-              </span>
+        {hasSearched ? (
+          <div className="backend-search-results">
+            <h3>Backend Search Results</h3>
 
-              <div className="task-actions">
-                <button
-                  className="edit-button"
-                  onClick={() => {
-                    setEditingTask(task);
-                    setPage("edit-task");
-                  }}
-                >
-                  <img src={editIcon} alt="" />
-                  Edit
-                </button>
-
-                <button
-                  className="delete-button"
-                  onClick={() => deleteTask(task.id)}
-                >
-                  <img src={deleteIcon} alt="" />
-                  Delete
-                </button>
-              </div>
-            </div>
-            <div className="task-card-divider"></div>
-
-            <h3>{task.title}</h3>
-
-            <p>{task.description}</p>
+            {apiTasks.length > 0 ? (
+              apiTasks.map((task) => (
+                <div className="task-card" key={task._id}>
+                  <h3>{task.title}</h3>
+                  <p>{task.description}</p>
+                  <p>Category: {task.category}</p>
+                  <p>Priority: {task.priority}</p>
+                  <p>Status: {task.completed ? "Completed" : "Incomplete"}</p>
+                </div>
+              ))
+            ) : (
+              <p>No matching tasks found in the backend.</p>
+            )}
           </div>
-        ))}
+        ) : (
+          filteredTasks.map((task) => (
+            <div className="task-card" key={task.id}>
+              <div className="task-card-top">
+                <span
+                  className={`task-priority ${task.priority.toLowerCase()}`}
+                >
+                  {task.priority}
+                </span>
+
+                <div className="task-actions">
+                  <button
+                    className="edit-button"
+                    onClick={() => {
+                      setEditingTask(task);
+                      setPage("edit-task");
+                    }}
+                  >
+                    <img src={editIcon} alt="" />
+                    Edit
+                  </button>
+
+                  <button
+                    className="delete-button"
+                    onClick={() => deleteTask(task.id)}
+                  >
+                    <img src={deleteIcon} alt="" />
+                    Delete
+                  </button>
+                </div>
+              </div>
+              <div className="task-card-divider"></div>
+
+              <h3>{task.title}</h3>
+
+              <p>{task.description}</p>
+            </div>
+          ))
+        )}
 
         <a href="#top" className="back-to-top">
           Back To Top
