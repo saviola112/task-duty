@@ -22,7 +22,7 @@ function MyTasks({ tasks, setTasks, setPage, setEditingTask }) {
       setSearchError("");
 
       const response = await fetch(
-        `http://localhost:5000/api/tasks?search=${encodeURIComponent(searchTerm)}`,
+        `${import.meta.env.VITE_API_URL}/api/tasks?search=${encodeURIComponent(searchTerm)}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
